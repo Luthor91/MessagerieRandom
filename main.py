@@ -62,27 +62,40 @@ root = Tk()
 root.title("Discord Gold Edition")
 root.minsize(1080, 720)
 
+# ajouter la scrollbar
+scrollbar = Scrollbar(root, orient="vertical")
+scrollbar.grid(rowspan=2, column=3,  sticky=N+S+W)
+
 # ajouter la zone de chat
-chat_box = Text(root, state=DISABLED)
-chat_box.pack()
+chat_box = Text(root, state=DISABLED, yscrollcommand=scrollbar.set)
+scrollbar.config(command=chat_box.yview)
+chat_box.grid(row=0, columnspan=2)
+
+# ajouter le label du pseudo
+label_pseudo = Label(root, text="Pseudo : ")
+label_pseudo.grid(row=1)
 
 # ajouter la zone de texte du pseudo
 pseudo_box_value = StringVar()
 pseudo_box = Entry(root, textvariable=pseudo_box_value)
-pseudo_box.pack()
+pseudo_box.grid(row=1, column=1)
+
+# ajouter le label de l'input
+label_input = Label(root, text="Input : ")
+label_input.grid(row=2)
 
 # ajouter la zone d'input text
 new_message_box_value = StringVar()
 new_message_box = Entry(root, textvariable=new_message_box_value)
-new_message_box.pack()
+new_message_box.grid(row=2, column=1)
 
 # ajouter le bouton d'envoie de message
 submit_button = Button(root, text="Envoyer", command=send_message)
-submit_button.pack()
+submit_button.grid(row=3, column=0)
 
 # ajouter le bouton de refresh
 refresh_button = Button(root, text="Refresh", command=print_messages)
-refresh_button.pack()
+refresh_button.grid(row=3, column=1)
 
 # bind 
 root.bind('<Return>', send_message)
